@@ -1,0 +1,170 @@
+[
+    {
+      "id": 1,
+      "name": "Inception",
+      "description": "A mind-bending heist movie.",
+      "releaseDate": "2010-07-16",
+      "rating": 5,
+      "categories": ["Action", "Sci-Fi", "Thriller"]
+    },
+    {
+      "id": 2,
+      "name": "The Shawshank Redemption",
+      "description": "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+      "releaseDate": "1994-09-23",
+      "rating": 5,
+      "categories": ["Drama"]
+    },
+    {
+      "id": 3,
+      "name": "The Godfather",
+      "description": "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
+      "releaseDate": "1972-03-24",
+      "rating": 5,
+      "categories": ["Crime", "Drama"]
+    },
+    {
+      "id": 4,
+      "name": "Pulp Fiction",
+      "description": "The lives of two mob hitmen, a boxer, a gangster and his wife, and a pair of diner bandits intertwine in four tales of violence and redemption.",
+      "releaseDate": "1994-10-14",
+      "rating": 4,
+      "categories": ["Crime", "Drama"]
+    },
+    {
+      "id": 5,
+      "name": "The Dark Knight",
+      "description": "When the menace known as The Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham.",
+      "releaseDate": "2008-07-18",
+      "rating": 5,
+      "categories": ["Action", "Crime", "Drama"]
+    },
+    {
+      "id": 6,
+      "name": "Schindler's List",
+      "description": "In German-occupied Poland during World War II, Oskar Schindler gradually becomes concerned for his Jewish workforce after witnessing their persecution by the Nazi Germans.",
+      "releaseDate": "1994-12-15",
+      "rating": 4,
+      "categories": ["Biography", "Drama", "History"]
+    },
+    {
+      "id": 7,
+      "name": "Forrest Gump",
+      "description": "The presidencies of Kennedy and Johnson, the events of Vietnam, Watergate, and other history unfold through the perspective of an Alabama man with an IQ of 75.",
+      "releaseDate": "1994-07-06",
+      "rating": 4,
+      "categories": ["Drama", "Romance"]
+    },
+    {
+      "id": 8,
+      "name": "Fight Club",
+      "description": "An insomniac office worker and a devil-may-care soapmaker form an underground fight club that evolves into something much, much more.",
+      "releaseDate": "1999-10-15",
+      "rating": 4,
+      "categories": ["Drama"]
+    },
+    {
+      "id": 9,
+      "name": "The Matrix",
+      "description": "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
+      "releaseDate": "1999-03-31",
+      "rating": 4,
+      "categories": ["Action", "Sci-Fi"]
+    },
+    {
+      "id": 10,
+      "name": "Goodfellas",
+      "description": "The story of Henry Hill and his life in the mob, covering his relationship with his wife Karen Hill and his mob partners Jimmy Conway and Tommy DeVito.",
+      "releaseDate": "1990-09-19",
+      "rating": 4,
+      "categories": ["Biography", "Crime", "Drama"]
+    },
+    {
+      "id": 11,
+      "name": "The Silence of the Lambs",
+      "description": "A young FBI cadet must receive the help of an incarcerated and manipulative cannibal killer to help catch another serial killer.",
+      "releaseDate": "1991-02-14",
+      "rating": 4,
+      "categories": ["Crime", "Drama", "Thriller"]
+    },
+    {
+      "id": 12,
+      "name": "Se7en",
+      "description": "Two detectives, a rookie and a veteran, hunt a serial killer who uses the seven deadly sins as his motives.",
+      "releaseDate": "1995-09-22",
+      "rating": 4,
+      "categories": ["Crime", "Drama", "Mystery"]
+    },
+    {
+      "id": 13,
+      "name": "Inglourious Basterds",
+      "description": "In Nazi-occupied France during World War II, a plan to assassinate Nazi leaders by a group of Jewish U.S. soldiers coincides with a theatre owner's vengeful plans for the same.",
+      "releaseDate": "2009-08-21",
+      "rating": 4,
+      "categories": ["Adventure", "Drama", "War"]
+    },
+    {
+      "id": 14,
+      "name": "The Lord of the Rings: The Fellowship of the Ring",
+      "description": "A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron.",
+      "releaseDate": "2001-12-19",
+      "rating": 5,
+      "categories": ["Action", "Adventure", "Drama"]
+    },
+    {
+      "id": 15,
+      "name": "The Lord of the Rings: The Two Towers",
+      "description": "While Frodo and Sam edge closer to Mordor with the help of the shifty Gollum, the divided fellowship makes a stand against Sauron's new ally, Saruman, and his hordes of Isengard.",
+      "releaseDate": "2002-12-18",
+      "rating": 5,
+      "categories": ["Action", "Adventure", "Drama"]
+    },
+    {
+      "id": 16,
+      "name": "The Lord of the Rings: The Return of the King",
+      "description": "Gandalf and Aragorn lead the World of Men against Sauron's army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring.",
+      "releaseDate": "2003-12-17",
+      "rating": 5,
+      "categories": ["Action", "Adventure", "Drama"]
+    },
+    {
+      "id": 17,
+      "name": "The Departed",
+      "description": "An undercover cop and a mole in the police attempt to identify each other while infiltrating an Irish gang in South Boston.",
+      "releaseDate": "2006-10-06",
+      "rating": 4,
+      "categories": ["Crime", "Drama", "Thriller"]
+    },
+    {
+      "id": 18,
+      "name": "Gladiator",
+      "description": "A former Roman General sets out to exact vengeance against the corrupt emperor who murdered his family and sent him into slavery.",
+      "releaseDate": "2000-05-05",
+      "rating": 4,
+      "categories": ["Action", "Adventure", "Drama"]
+    },
+    {
+      "id": 19,
+      "name": "The Prestige",
+      "description": "After a tragic accident, two stage magicians engage in a battle to create the ultimate illusion while sacrificing everything they have to outwit each other.",
+      "releaseDate": "2006-10-20",
+      "rating": 4,
+      "categories": ["Drama", "Mystery", "Sci-Fi"]
+    },
+    {
+      "id": 20,
+      "name": "The Usual Suspects",
+      "description": "A sole survivor tells of the twisty events leading up to a horrific gun battle on a boat, which began when five criminals met at a seemingly random police lineup.",
+      "releaseDate": "1995-09-15",
+      "rating": 4,
+      "categories": ["Crime", "Drama", "Mystery"]
+    },
+    {
+      "id": 21,
+      "name": "Django Unchained",
+      "description": "With the help of a German bounty hunter, a freed slave sets out to rescue his wife from a brutal Mississippi plantation owner.",
+      "releaseDate": "2012-12-25",
+      "rating": 4,
+      "categories": ["Drama", "Western"]
+    }
+]  

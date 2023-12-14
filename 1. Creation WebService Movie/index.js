@@ -1,13 +1,13 @@
 var express = require('express');
-const accepts = require('express-accepts');
+// const accepts = require('express-accepts');
 var app = express();
 const port = 3000;
+const films = require('./films.json');
+
+console.log(films.length)
 
 // Middleware pour le parsing du corps de la requête en JSON
 app.use(express.json());
-
-// Middleware pour gérer les formats de sortie JSON et XML
-app.use(accepts('json', 'xml'));
 
 // Le WebService en lui même
 //     Il doit disposer de routes de récupération des films (en listing, et récupération d’entité)
@@ -43,29 +43,30 @@ app.use(accepts('json', 'xml'));
 // https://swagger.io/specification/
 
 
-// Liste de films
-const films = [
-    {
-      id: 1,
-      name: 'Film 1',
-      description: 'Description du Film 1',
-      releaseDate: '2023-01-01',
-      rating: 4,
-    },
-    {
-      id: 2,
-      name: 'Film 2',
-      description: 'Description du Film 2',
-      releaseDate: '2023-02-15',
-      rating: 3,
-    },
-    // Ajout d'autres films ici...
-];
+// MAJ pour le rendu du 15 décembre 2023
+//
+// Il doit permettre de rechercher par titre ou par description (petit indice, sur une route de collection on peu passer des paramètres , les query)
+// Le résultat doit être paginé (page 1 sur 22, 10 éléments par page par exemple)
+// Un film doit être attaché à une ou plusieurs catégories
+// On doit pouvoir lister les catégories d’un film et inversement (la notions des sous-ressources et leurs URI)
+// Il faut penser au développeur qui va utiliser le webservice … Personne ne lit la doc (RTFM en est né), il devra pouvoir retourner du JSON HAL
 
-// Endpoint pour récupérer la liste de films
-app.get('/films', (req, res) => {
-  res.json(films);
+
+// GET method route
+app.get('/', function (req, res) {
+    res.send('GET request to the homepage');
 });
+
+// POST method route
+app.post('/', function (req, res) {
+    res.send('POST request to the homepage');
+});
+
+// Endpoint pour récupérer les films
+app.get('/films', (req, res) => {
+    res.json(films);
+});
+
 
 // Endpoint pour récupérer un film par son ID
 app.get('/films/:id', (req, res) => {
@@ -79,7 +80,6 @@ app.get('/films/:id', (req, res) => {
     }
 });
 
-// Endpoint pour ajouter un nouveau film
 app.post('/films', (req, res) => {
     const newFilm = req.body;
   
@@ -119,26 +119,25 @@ app.put('/films/:id', (req, res) => {
     }
 });
 
+
+app.get('/page/:page', (req, res) => {
+    // Récupérer les paramètres de la requête pour la pagination
+    const page = parseInt(req.params.page) || 1;
+    const pageSize = 10;
+  
+    // Calculer l'indice de départ pour la pagination
+    const startIndex = (page - 1) * pageSize;
+  
+    // Extraire les films pour la page actuelle
+    const paginatedFilms = films.slice(startIndex, startIndex + pageSize);
+  
+    // Envoyer les films paginés en réponse
+    res.json(paginatedFilms);
+  });
+
+
+
 // Démarrer le serveur
 app.listen(port, () => {
   console.log(`Le serveur écoute sur le port ${port}`);
-});
-
-Dans cet exemple, j'ai ajouté le middleware express-accepts pour gérer les en-têtes Accept des requêtes. En fonction de la valeur de l'en-tête Accept, le serveur renvoie la réponse dans le format approprié (JSON ou XML). Note que la logique pour la sortie XML est simplifiée et peut nécessiter un module supplémentaire pour une gestion plus avancée des formats XML.
-
-});
-
-// Démarrer le serveur
-app.listen(port, () => {
-  console.log(`Le serveur écoute sur le port ${port}`);
-});
-
-// GET method route
-app.get('/', function (req, res) {
-    res.send('GET request to the homepage');
-});
-
-// POST method route
-app.post('/', function (req, res) {
-    res.send('POST request to the homepage');
 });
