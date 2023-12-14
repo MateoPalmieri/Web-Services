@@ -1,12 +1,9 @@
 var express = require('express');
-// const accepts = require('express-accepts');
 var app = express();
 const port = 3000;
 const films = require('./films.json');
 
-console.log(films.length)
-
-// Middleware pour le parsing du corps de la requête en JSON
+// Middleware to parse request body in JSON
 app.use(express.json());
 
 // Le WebService en lui même
@@ -62,13 +59,13 @@ app.post('/', function (req, res) {
     res.send('POST request to the homepage');
 });
 
-// Endpoint pour récupérer les films
+// Endpoint to get every films
 app.get('/films', (req, res) => {
     res.json(films);
 });
 
 
-// Endpoint pour récupérer un film par son ID
+// Endpoint to get a film by his ID
 app.get('/films/:id', (req, res) => {
     const filmId = parseInt(req.params.id);
     const film = films.find(f => f.id === filmId);
@@ -76,14 +73,16 @@ app.get('/films/:id', (req, res) => {
     if (film) {
         res.status(200).json(film);
     } else {
-        res.status(404).json({ error: 'Film non trouvé' });
+        res.status(404).json({ error: 'Film not found' });
     }
 });
 
+
+// Endpoint to add a new film
 app.post('/films', (req, res) => {
     const newFilm = req.body;
   
-    // Vérifications de validation
+    // Verify if everything is correct
     if (!newFilm.name || !newFilm.description || !newFilm.releaseDate) {
         res.status(422).json({ error: 'Validation impossible. Assurez-vous de fournir le nom, la description et la date de parution.' });
     } else {
@@ -104,7 +103,7 @@ app.post('/films', (req, res) => {
     }
 });
 
-// Endpoint pour modifier un film par son ID
+// Endpoint to modify a film by his ID
 app.put('/films/:id', (req, res) => {
     const filmId = parseInt(req.params.id);
     const updatedFilm = req.body;
@@ -121,23 +120,23 @@ app.put('/films/:id', (req, res) => {
 
 
 app.get('/page/:page', (req, res) => {
-    // Récupérer les paramètres de la requête pour la pagination
+    // Get parameters
     const page = parseInt(req.params.page) || 1;
     const pageSize = 10;
   
-    // Calculer l'indice de départ pour la pagination
+    // Calculate index for pagination
     const startIndex = (page - 1) * pageSize;
   
-    // Extraire les films pour la page actuelle
+    // Extracts films for the actual page
     const paginatedFilms = films.slice(startIndex, startIndex + pageSize);
   
-    // Envoyer les films paginés en réponse
+    // Send paginated films in response
     res.json(paginatedFilms);
   });
 
 
 
-// Démarrer le serveur
+// Start the server
 app.listen(port, () => {
   console.log(`Le serveur écoute sur le port ${port}`);
 });
