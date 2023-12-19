@@ -29,8 +29,7 @@ const users = require('./users.json');
 */
 app.post('/api/account', (req, res) => {
 
-
-    // Créer un objet utilisateur
+    // Crate a User object
     const user = {
         login: req.body.login,
         password: req.body.password,
@@ -38,46 +37,19 @@ app.post('/api/account', (req, res) => {
         status: "open"
     };
 
-    fs.readFile(users, 'utf8', (err, data) => {
-        if (err) {
-          console.error(err);
-          res.status(500).send('Erreur lors de la lecture du fichier.');
-          return;
-        }
-    
-        // Analyser le contenu JSON du fichier
-        const users = JSON.parse(data);
-    
-        // Ajouter le nouvel utilisateur
-        users.push(user);
-    
-        // Convertir le tableau mis à jour en chaîne JSON
-        const usersJSON = JSON.stringify(users);
-    
-        // Réécrire le fichier users.json avec les données mises à jour
-        fs.writeFile(users, usersJSON, (err) => {
-          if (err) {
-            console.error(err);
-            res.status(500).send('Erreur lors de l\'enregistrement de l\'utilisateur.');
-          } else {
-            console.log('Utilisateur ajouté avec succès !');
-            res.status(200).send('Utilisateur ajouté avec succès.');
-          }
-        });
-      });
+    if (users.find(u => u.login === user.login)) {
+        res.status(500).send('Erreur lors de l\'enregistrement de l\'utilisateur.');
+        return
+    }
 
-    // Convert object user to JSON
-    // const userJSON = JSON.stringify(user);
+    // users is a copy of the real users.json file, so we push the new user into users, then we create the users.json file and erase the old one
+    users.push(user)
 
-    // Écrire dans le fichier users.json
-    // fs.writeFile(users, userJSON, (err) => {
-    //     if (err) {
-    //         console.error(err);
-    //         res.status(500).send('Erreur lors de l\'enregistrement de l\'utilisateur.');
-    //     } else {
-    //         res.status(201).json({ message: 'Création avec succès de l\'utilisateur' });
-    //     }
-    // });
+    fs.writeFile('./users.json', JSON.stringify(users), (err) => {
+        if (err) throw err;
+    })
+
+    res.status(201).json({ message: 'Création avec succès de l\'utilisateur' });
 
 });
 
@@ -127,6 +99,27 @@ app.post('/api/token', (req, res) => {
         res.status(404).json({ message: 'Identifiants non trouvés (paire login / mot de passe inconnue)' });
     }
 
+});
+
+
+app.get('/api/validate/:accessToken', (req, res) => {
+
+    const accessToken = req.params.accessToken;
+
+    const verifiedAccessToken = jwt.verify(accessToken, secretKey);
+
+    // Expiration date
+    const timestamp = verifiedAccessToken.exp;
+    const dateExpiration = new Date(timestamp * 1000);
+
+    if (jwt.verify(accessToken, secretKey)) {
+        // 200 : Renvoi AccessToken d'un User
+        res.status(200).json({ accessToken: verifiedAccessToken.iat, accessTokenExpiresAt: dateExpiration });
+        return
+    }
+
+    // 404 : Token non trouvé / non valide
+    res.status(404).json({ message: 'Token non trouvé / invalide' });
 });
 
 // Start the server

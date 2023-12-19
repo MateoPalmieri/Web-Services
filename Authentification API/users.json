@@ -1,14 +1,14 @@
 [
-    {
-        "login":"userTest",
-        "password":"motdepasseTest",
-        "role":["ROLE_USER"],
-        "status":"open"
-    },
-    {
-        "login":"userAdmin",
-        "password":"motdepasse1",
-        "role":["ROLE_ADMIN"],
-        "status":"open"
-    }
+  {
+    "login": "userTest",
+    "password": "motdepasseTest",
+    "role": ["ROLE_USER"],
+    "status": "open"
+  },
+  {
+    "login": "userAdmin",
+    "password": "motdepasse1",
+    "role": ["ROLE_ADMIN"],
+    "status": "open"
+  }
 ]
