@@ -10,11 +10,10 @@ const secretKey = 'secretKey';
 const accessTokenExpiration = 30 * 60;
 const refreshTokenExpiration = 120 * 60;
 
+app.use(express.json());
 
-const users = [
-    { id: 1, login: 'userAdmin', password: 'motdepasse1', role: ['ROLE_ADMIN', 'ROLE_USER'], status: 'open' },
-    { id: 2, login: 'userLambda', password: 'motdepasse2', role: ['ROLE_USER'], status: 'closed' },
-];
+
+const users = require('./users.json');
 
 
 // Endpoint User account creation
@@ -29,9 +28,56 @@ const users = [
     Renvoi un compte utilisateur
 */
 app.post('/api/account', (req, res) => {
-    
-    // 201 Création avec succès
 
+
+    // Créer un objet utilisateur
+    const user = {
+        login: req.body.login,
+        password: req.body.password,
+        role: ["ROLE_USER"],
+        status: "open"
+    };
+
+    fs.readFile(users, 'utf8', (err, data) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send('Erreur lors de la lecture du fichier.');
+          return;
+        }
+    
+        // Analyser le contenu JSON du fichier
+        const users = JSON.parse(data);
+    
+        // Ajouter le nouvel utilisateur
+        users.push(user);
+    
+        // Convertir le tableau mis à jour en chaîne JSON
+        const usersJSON = JSON.stringify(users);
+    
+        // Réécrire le fichier users.json avec les données mises à jour
+        fs.writeFile(users, usersJSON, (err) => {
+          if (err) {
+            console.error(err);
+            res.status(500).send('Erreur lors de l\'enregistrement de l\'utilisateur.');
+          } else {
+            console.log('Utilisateur ajouté avec succès !');
+            res.status(200).send('Utilisateur ajouté avec succès.');
+          }
+        });
+      });
+
+    // Convert object user to JSON
+    // const userJSON = JSON.stringify(user);
+
+    // Écrire dans le fichier users.json
+    // fs.writeFile(users, userJSON, (err) => {
+    //     if (err) {
+    //         console.error(err);
+    //         res.status(500).send('Erreur lors de l\'enregistrement de l\'utilisateur.');
+    //     } else {
+    //         res.status(201).json({ message: 'Création avec succès de l\'utilisateur' });
+    //     }
+    // });
 
 });
 
@@ -52,12 +98,11 @@ app.post('/api/account', (req, res) => {
 */
 app.post('/api/token', (req, res) => {
 
-    console.log(req.body);
-    
-    const { login, password, from } = req.body;
+    const login     = req.body.login;
+    const password  = req.body.password;
 
     // Verify authentification informations
-    const user = users.find(u => u.login === login && u.password === password && u.ipAddress === from);
+    const user = users.find(u => u.login === login && u.password === password);
 
     if (user) {
         // Create AccessToken (JWT) and refreshToken and return it
@@ -65,7 +110,7 @@ app.post('/api/token', (req, res) => {
         const refreshToken  = jwt.sign({ username: user.username, id: user.id }, secretKey, { expiresIn: refreshTokenExpiration });
 
         // Stocker le refresh token dans un fichier
-        fs.writeFile(`./refresh_tokens/${user.id}.json`, JSON.stringify({ refreshToken }));
+        // fs.writeFile(`./refresh_tokens/${user.id}.json`, JSON.stringify({ refreshToken }));
 
         const currentDate           = new Date();
         const accessTokenExpiresAt  = new Date(currentDate.getTime() + accessTokenExpiration * 1000);
