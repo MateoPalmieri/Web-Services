@@ -16,6 +16,15 @@ app.use(express.json());
 const users = require('./users.json');
 
 
+// MAJ pour le rendu du 19 janvier 2024
+//
+// ✅ Créer un compte utilisateur (soit par un admin, soit par un utilisateur non identifié)
+// ⬛ Afficher / Editer un compte utilisateur
+// ✅ Permet de créer un jeton utilisable par d’autres services par la suite
+// ⬛ Permet de renouveler régulièrement ce jeton sans avoir à refaire toute la procédure
+// ✅ Est protégée du brut force
+
+
 // Endpoint User account creation
 /*
     "login": "string",
@@ -29,13 +38,22 @@ const users = require('./users.json');
 */
 app.post('/api/account', (req, res) => {
 
-    // Crate a User object
+    // Create a User object
     const user = {
         login: req.body.login,
         password: req.body.password,
         role: ["ROLE_USER"],
         status: "open"
     };
+
+    if (user.login === '' ||
+        user.login === undefined ||
+        user.password === '' ||
+        user.password === undefined
+    ) {
+        res.status(500).send('Un identifiant et un mot de passe sont nécessaires.');
+        return
+    }
 
     if (users.find(u => u.login === user.login)) {
         res.status(500).send('Erreur lors de l\'enregistrement de l\'utilisateur.');
@@ -68,13 +86,38 @@ app.post('/api/account', (req, res) => {
 
     Renvoi un Access Token et un Refresh Token
 */
+// Dans le body, envoyer une requête comme suit :
+//
+// [
+//     {
+//         "login": "userAdmin",
+//         "password": "modepasse1"
+//     }
+// ]
 app.post('/api/token', (req, res) => {
 
     const login     = req.body.login;
     const password  = req.body.password;
 
+    let tryCount = 0;
+    let isBanned = false;
+
     // Verify authentification informations
     const user = users.find(u => u.login === login && u.password === password);
+
+    if (!user) {
+        tryCount++;
+    }
+
+    // If too many try, ban the User temporarly
+    if (tryCount >= 3 || isBanned === true) {
+        isBanned = true;
+
+        // let date =  new Date();
+        // let dateUntilRestrictedAccess = new Date(date.getTime() + '30 minutes');
+
+        res.status(422).json({ message: 'Trop de tentatives, accès bloqué pour les 30 prochaines minutes.' });
+    }
 
     if (user) {
         // Create AccessToken (JWT) and refreshToken and return it
@@ -121,6 +164,7 @@ app.get('/api/validate/:accessToken', (req, res) => {
     // 404 : Token non trouvé / non valide
     res.status(404).json({ message: 'Token non trouvé / invalide' });
 });
+
 
 // Start the server
 app.listen(port, () => {
